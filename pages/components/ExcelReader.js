@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import * as XLSX from "xlsx";
-// import FileInput from "./FileInput";
 import {
   addDoc,
   collection,
@@ -29,7 +28,6 @@ function ExcelReader() {
     snapshot.forEach((doc) => {
       tempDoc.push({ id: doc.id, ...doc.data() });
     });
-    // console.log(tempDoc);
     setData(tempDoc);
   };
 
@@ -41,9 +39,6 @@ function ExcelReader() {
       const workbook = XLSX.read(file, { type: "array" });
       const sheetName = workbook.SheetNames[0];
       const sheetData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
-      // setData(sheetData);
-
-      console.log(typeof sheetData);
       addData(sheetData);
     };
 
@@ -54,7 +49,6 @@ function ExcelReader() {
   const addData = async (data) => {
     const ref = collection(firestore, "students");
     data.forEach(async (currentItem) => {
-      console.log(currentItem);
       const doc = await addDoc(ref, {
         name: currentItem.Name || null,
         class: currentItem.Class || null,
@@ -74,7 +68,7 @@ function ExcelReader() {
   };
 
   const deleteData= async (element) => {
-    console.log(element);
+    
     const ref = doc(firestore, "students", element.id)
     const deletedDoc = deleteDoc(ref).then((doc)=>{
       getData()

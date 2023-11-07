@@ -7,7 +7,7 @@ export default function Home() {
     papa.parse(file, {
       header : true,
       complete : (results) => {
-        console.log(results.data);
+        // console.log(results.data);
       }
     })
   }
